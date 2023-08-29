@@ -70,10 +70,11 @@ export default function Sidebar({
         </button>
       )}
       <div
-        className={`top-0 left-0 fixed bg-slate-900 w-[400px] h-screen pt-36 px-5
+        className={`top-0 left-0 fixed bg-slate-900 w-[400px] h-full pt-36 px-5
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} 
         ease-in-out duration-500`}
       >
+        <h1 className="text-white text-xl mb-3">Upload PDFs first</h1>
         {/* Drag and Drop Box */}
         <div className="max-w-xl">
           <label className="flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
@@ -102,6 +103,7 @@ export default function Sidebar({
               type="file"
               multiple
               className="hidden"
+              accept="application/pdf"
               onChange={handleChange}
             />
           </label>

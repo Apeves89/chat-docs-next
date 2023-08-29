@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export default function Chat({ sidebarOpen, DocLoading }) {
+export default function Chat({ sidebarOpen, DocLoading, files }) {
   const [answerLoading, setAnswerLoading] = useState(false);
   const [question, setQuestion] = useState("");
   const [messages, setMessages] = useState([]);
@@ -35,13 +35,17 @@ export default function Chat({ sidebarOpen, DocLoading }) {
 
   return (
     <div
-      className={` w-7/12 ${
+      className={` w-11/12 ${
         sidebarOpen ? "ml-[400px]" : null
       } ease-in-out duration-500`}
     >
       <div className="w-full px-5 flex flex-col justify-between">
+        <h1 className="text-3xl text-white text-center mt-5">
+          Chat with multiple PDFs 📚
+        </h1>
+
         <form onSubmit={handleSubmit}>
-          <div className="py-5  h-[10vh]">
+          <div className="py-5 ">
             <input
               className={`w-full ${
                 DocLoading ? "bg-gray-600" : "bg-gray-300"
@@ -49,17 +53,17 @@ export default function Chat({ sidebarOpen, DocLoading }) {
               type="text"
               placeholder="Ask a question about your documents..."
               onChange={handleChange}
-              disabled={DocLoading}
+              disabled={DocLoading ? true : files ? true : false}
             />
           </div>
         </form>
 
         {answerLoading ? (
-          <div className="flex mt-5 h-[82vh] justify-center items-center">
+          <div className="flex mt-5 min-h-72 justify-center items-center">
             <div className="text-3xl text-white animate-bounce">Loading...</div>
           </div>
         ) : (
-          <div className="flex flex-col mt-5 py-5 px-3 rounded-xl bg-slate-900 h-[82vh] overflow-y-scroll">
+          <div className="flex flex-col mt-5 py-5 px-3 rounded-xl bg-slate-900 max-h-[85vh] overflow-y-scroll">
             {messages.map((message, i) =>
               i % 2 === 0 ? (
                 <div className="flex justify-start items-center mb-4">
