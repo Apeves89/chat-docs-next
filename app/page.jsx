@@ -16,7 +16,7 @@ export default function Home() {
         setDocLoading={setDocLoading}
       />
 
-      <Chat sidebarOpen={sidebarOpen} />
+      <Chat sidebarOpen={sidebarOpen} DocLoading={DocLoading} />
     </main>
   );
 }

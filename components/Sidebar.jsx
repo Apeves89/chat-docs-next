@@ -7,6 +7,7 @@ import {
   HiChevronDoubleRight,
   HiOutlineTrash,
 } from "react-icons/hi";
+import axios from "axios";
 
 export default function Sidebar({
   sidebarOpen,
@@ -14,25 +15,38 @@ export default function Sidebar({
   DocLoading,
   setDocLoading,
 }) {
-  const [file, setFile] = useState([]);
+  const [files, setFiles] = useState([]);
+  const [APIResponse, setAPIResponse] = useState("");
 
   const handleChange = (e) => {
-    const docs = e.target.files;
-    for (let doc of docs) {
-      setFile((prev) => [...prev, doc]);
-    }
+    setFiles(e.target.files);
+
+    // const docs = e.target.files;
+    // for (let doc of docs) {
+    //   setFiles((prev) => [...prev, doc]);
+    // }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setDocLoading(true);
+    const data = new FormData();
+    [...files].forEach((file, i) => {
+      data.append(`file-${i}`, file, file.name);
+    });
 
     try {
-      //API call here
+      const response = await fetch("http://localhost:8000/upload/", {
+        method: "POST",
+        body: data,
+      });
+      const responseData = await response.json();
+      setAPIResponse(responseData);
     } catch (error) {
       console.error(error);
     } finally {
-      //   setDocLoading(false);
+      setFiles([]);
+      setDocLoading(false);
     }
   };
 
@@ -87,7 +101,6 @@ export default function Sidebar({
             <input
               type="file"
               multiple
-              name="file_upload"
               className="hidden"
               onChange={handleChange}
             />
@@ -96,7 +109,7 @@ export default function Sidebar({
         {/* Drag and Drop Box End*/}
         <div className="flex flex-col items-center w-full ">
           <ul className="my-5 max-h-[300px] overflow-y-scroll w-full px-2">
-            {file.map((f, idx) => (
+            {[...files].map((f, idx) => (
               <li key={idx}>
                 <div className="flex justify-between items-center w-full gap-x-4">
                   <div>
@@ -111,14 +124,16 @@ export default function Sidebar({
                   <div className="justify-self-end">
                     <HiOutlineTrash
                       className="text-red-400 h-5 w-5 cursor-pointer"
-                      onClick={() => setFile(file.filter((f, i) => i !== idx))}
+                      onClick={() =>
+                        setFiles([...files].filter((f, i) => i !== idx))
+                      }
                     />
                   </div>
                 </div>
               </li>
             ))}
           </ul>
-          {file.length === 0 ? (
+          {files.length === 0 ? (
             <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed">
               Submit
             </button>
@@ -130,6 +145,15 @@ export default function Sidebar({
               Submit
             </button>
           )}
+          {APIResponse.success ? (
+            <div className="text-sm text-green-500 mt-5">
+              {APIResponse?.success}
+            </div>
+          ) : APIResponse.error ? (
+            <div className="text-sm text-red-400 mt-5">
+              {APIResponse?.error}
+            </div>
+          ) : null}
         </div>
       </div>
       {DocLoading ? (
