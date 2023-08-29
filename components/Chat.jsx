@@ -17,7 +17,7 @@ export default function Chat({ sidebarOpen, DocLoading, files }) {
         setAnswerLoading(true);
         const data = new FormData();
         data.append("question", question);
-        const response = await fetch("http://localhost:8000/chat/", {
+        const response = await fetch("https://chat-docs.onrender.com/chat/", {
           method: "POST",
           body: data,
         });
@@ -68,7 +68,7 @@ export default function Chat({ sidebarOpen, DocLoading, files }) {
               i % 2 === 0 ? (
                 <div className="flex justify-start items-center mb-4">
                   <img
-                    src="https://source.unsplash.com/vpOeXr5wmR4/600x600"
+                    src="https://techcrunch.com/wp-content/uploads/2015/04/codecode.jpg"
                     className="object-cover h-8 w-8 rounded-full"
                     alt=""
                   />
