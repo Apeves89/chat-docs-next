@@ -35,7 +35,7 @@ export default function Sidebar({
     });
 
     try {
-      const response = await fetch("http://localhost:8000/upload/", {
+      const response = await fetch("https://chat-docs.onrender.com/upload/", {
         method: "POST",
         body: data,
       });

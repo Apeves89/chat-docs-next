@@ -17,7 +17,7 @@ export default function Chat({ sidebarOpen, DocLoading, files }) {
         setAnswerLoading(true);
         const data = new FormData();
         data.append("question", question);
-        const response = await fetch("http://localhost:8000/chat/", {
+        const response = await fetch("https://chat-docs.onrender.com/chat/", {
           method: "POST",
           body: data,
         });
