@@ -17,7 +17,7 @@ export default function Chat({ sidebarOpen, DocLoading, files }) {
         setAnswerLoading(true);
         const data = new FormData();
         data.append("question", question);
-        const response = await fetch("https://chat-docs.onrender.com/chat/", {
+        const response = await fetch("http://localhost:8000/chat/", {
           method: "POST",
           body: data,
         });
@@ -66,7 +66,7 @@ export default function Chat({ sidebarOpen, DocLoading, files }) {
           <div className="flex flex-col mt-5 py-5 px-3 rounded-xl bg-slate-900 max-h-[85vh] overflow-y-scroll">
             {messages.map((message, i) =>
               i % 2 === 0 ? (
-                <div className="flex justify-start items-center mb-4">
+                <div className="flex justify-start items-center mb-4" key={i}>
                   <img
                     src="https://techcrunch.com/wp-content/uploads/2015/04/codecode.jpg"
                     className="object-cover h-8 w-8 rounded-full"
@@ -77,7 +77,7 @@ export default function Chat({ sidebarOpen, DocLoading, files }) {
                   </div>
                 </div>
               ) : (
-                <div className="flex justify-end items-center mb-4">
+                <div className="flex justify-end items-center mb-4" key={i}>
                   <div className="mr-2 py-3 px-4  rounded-bl-3xl rounded-tl-3xl text-white">
                     {message}
                   </div>
