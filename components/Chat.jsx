@@ -22,6 +22,7 @@ export default function Chat({ sidebarOpen, DocLoading, files }) {
           body: data,
         });
         const responseData = await response.json();
+        console.log(responseData);
         setMessages([responseData.result, responseData.query, ...messages]);
       } catch (error) {
         console.log(error);
